@@ -1,0 +1,19 @@
+{% extends "materials/base.html" %}
+{% block title %}Материалы из категории {{title}}{% endblock %}
+
+{% block content %}
+<main>
+    <section>
+	<div class="container">
+	    <h1>Материалы из категории {{title}}</h1>
+	</div>
+    </section>
+	<div>
+		{% for material in object_list%}
+		<div>
+				<h3>{{material}}</h3>
+		</div>
+		{% endfor %}
+    </div>
+</main>
+{% endblock %}
