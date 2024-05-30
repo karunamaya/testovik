@@ -15,7 +15,6 @@ class CategoryTreeView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        # проверить есть ли материалы с таким parentId
         materials = Material.objects.filter(category=request.data["parent"])
         if len(materials) > 0:
             return Response("Нельзя добавить категорию - это крайняя категория!",
@@ -41,8 +40,6 @@ class CategoryTreeView(APIView):
             return JsonResponse({'message': 'Material not found'}, status=404)
         category_serializer = CategorySerializer(category, data=request.data)
         print(category_serializer)
-        # material = materials[0]
-        # material_serializer = MaterialSerializer(material, data=request.data)
         if category_serializer.is_valid():
             category_serializer.save()
             return JsonResponse({'message': 'Updated Successfully'}, safe=True)
@@ -53,11 +50,7 @@ class CategoryTreeView(APIView):
             category = Category.objects.get(id=request.data["id"])
         except Category.DoesNotExist:
             return JsonResponse({'message': 'Category not found'}, status=404)
-
-        # Delete materials associated with the category
         Material.objects.filter(category=category).delete()
-
-        # Now, delete the category
         category.delete()
 
         return JsonResponse("Deleted Successfully", safe=False)
@@ -70,13 +63,11 @@ class MaterialView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        # проверить есть ли категорияя в этой ветке с таким parentId
         category = Category.objects.filter(id=request.data["category"])
         serializer = CategorySerializer(category)
         children = []
         for cat in category:
             children = cat.children.all()
-        # если есть дочерние категории - нельзя добавлять материалы
         if len(children) > 0:
             return Response("Нельзя добавить метериал - это не крайняя категория!",
                             status=status.HTTP_400_BAD_REQUEST)

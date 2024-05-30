@@ -12,7 +12,7 @@ class MaterialSerializerByCategory(serializers.ModelSerializer):
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Material
-        fields = ["id","title", "slug", "cost", "category"]  # '__all__'
+        fields = ["id", "title", "slug", "cost", "category"]  # '__all__'
 
 
 class MaterialsAPI(generics.ListAPIView):
@@ -35,9 +35,7 @@ class CategorySerializer(serializers.ModelSerializer):
         return CategorySerializer(obj.get_children(), many=True).data
 
     def get_materials(self, obj):
-        # if obj.is_leaf_node():
         return MaterialSerializerByCategory(obj.materials.all(), many=True).data
-        # return []
 
     def get_summa(self, obj):
         if obj.materials.exists():
@@ -71,7 +69,8 @@ class FlatCategorySerializer(serializers.ModelSerializer):
                     continue
                 processed_categories.add(category.id)
                 materials = category.materials.all()
-                materials_list = [{'id': material.id, 'title': material.title, 'cost': material.cost} for material in materials]
+                materials_list = [{'id': material.id, 'title': material.title, 'cost': material.cost} for material in
+                                  materials]
                 category_dict = {'id': category.id, 'title': category.title, 'slug': category.slug,
                                  'parent_id': category.parent_id}
                 if materials_list:
