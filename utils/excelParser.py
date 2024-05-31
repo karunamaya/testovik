@@ -5,7 +5,7 @@ def parser():
     wb = openpyxl.load_workbook('excel.xlsx')
     sheet = wb['Sheet1']
     data = []
-    url = 'http://127.0.0.1:8000/materials/'
+    url = 'http://127.0.0.1:8000/api/materials/'
     token = ''
     headers = {'Content-Type': 'application/json'}
     # Iterate over the rows in the sheet

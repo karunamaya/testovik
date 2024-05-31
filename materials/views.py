@@ -108,4 +108,4 @@ def excelApi(request, id=0):
     print(request)
     if request.method == 'POST':
         parser()
-        return JsonResponse("Failejjd to Add", safe=False)
+        return JsonResponse("Successfully added materials", safe=False)
