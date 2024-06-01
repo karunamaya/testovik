@@ -9,14 +9,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/categories/', CategoryTreeView.as_view()),
     path('api/flatcategories/', CategoryFlatView.as_view()),
-    path('api/categories/create/', CategoryTreeView.as_view()),
-    path('api/category/update', CategoryTreeView.as_view()),
-    path('api/category/delete', CategoryTreeView.as_view()),
     path('api/materials/', MaterialView.as_view()),
-    path('api/materials/update', MaterialView.as_view()),
-    path('api/materials/delete', MaterialView.as_view()),
     re_path("api/excel", views.excelApi),
-
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
